@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "well",
+    "slug": "well",
+    "scheme": "well",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "bundleIdentifier": "app.well.client",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "well uses the microphone only when you choose to record a spoken answer. Recordings stay on your device unless you explicitly export them."
+      }
+    },
+    "android": {
+      "package": "app.well.client",
+      "permissions": ["RECORD_AUDIO"]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow well to access the microphone for voice answers."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

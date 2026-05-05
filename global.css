@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================================================================
+   Web defaults — RN ignores these. Native applies font-family at the
+   <Text> level via Tailwind classes.
+   ================================================================== */
+html, body, #root {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  letter-spacing: -0.005em;
+  background: rgb(var(--paper));
+  color: rgb(var(--ink));
+}
+
+/* Tabular numerals for numeric columns. Apply via `tabular-nums` class. */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Visible focus ring on every interactive element (keyboard a11y).
+   :focus-visible avoids the ring on mouse/touch — only keyboard users
+   see it, which is the conventional pattern. */
+*:focus { outline: none; }
+*:focus-visible {
+  outline: 2px solid rgb(var(--focus));
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Honour the OS reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Default smooth, restrained transitions on common interactive elements
+   (buttons, pressables, links). 180ms with ease-out — within the
+   150–300ms human-perception sweet spot. */
+button, a, [role='button'] {
+  transition: opacity 180ms ease-out, background-color 180ms ease-out,
+    border-color 180ms ease-out, transform 180ms ease-out;
+}
+
+/* ==================================================================
+   Design tokens — neutrals + focus colour.
+   ================================================================== */
+@layer base {
+  :root {
+    /* Light — warm paper, deep warm ink. WCAG-AA tested against paper:
+       ink (4.5:1+ display), ink-2 (4.5:1+ body), muted (4.5:1+ body).  */
+    --ink: 20 17 15;          /* #14110f */
+    --ink-2: 61 57 52;        /* #3d3934 */
+    --paper: 250 249 246;     /* #faf9f6 */
+    --paper-2: 244 242 236;   /* slightly recessed */
+    --paper-3: 236 233 224;   /* deepest paper / wells */
+    --muted: 110 104 96;      /* #6e6860 — passes 4.5:1 on paper */
+    --muted-2: 142 136 125;   /* meta only — used at ≥14px */
+    --rule: 226 222 213;      /* hairlines */
+    --rule-2: 207 202 191;    /* stronger hairlines */
+    --focus: 59 122 122;      /* teal — calm, distinct */
+  }
+
+  .dark:root,
+  :root.dark {
+    --ink: 244 240 232;
+    --ink-2: 208 202 189;
+    --paper: 18 16 14;        /* #121210 — not pure black, per principle */
+    --paper-2: 28 25 21;
+    --paper-3: 38 34 28;
+    --muted: 162 156 144;     /* dark-mode muted */
+    --muted-2: 132 126 113;
+    --rule: 50 46 39;
+    --rule-2: 70 64 54;
+    --focus: 122 184 184;     /* lifted teal */
+  }
+
+  /* OS preference fallback — NativeWind doesn't always toggle the .dark
+     class on web. Manual override possible by adding `light` to <html>. */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+      --ink: 244 240 232;
+      --ink-2: 208 202 189;
+      --paper: 18 16 14;
+      --paper-2: 28 25 21;
+      --paper-3: 38 34 28;
+      --muted: 162 156 144;
+      --muted-2: 132 126 113;
+      --rule: 50 46 39;
+      --rule-2: 70 64 54;
+      --focus: 122 184 184;
+    }
+  }
+}
